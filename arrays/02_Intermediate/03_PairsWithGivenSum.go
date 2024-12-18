@@ -36,13 +36,18 @@ Constraints:
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
 	arr := []int{1, 2, 3, 4, 5}
 	target := 6
 	pairs := findPairs(arr, target)
 	fmt.Println("Pairs", pairs)
+
+	pairs = findPairsUsingMap(arr, target)
+	fmt.Println("Pairs using map", pairs)
 }
 
 // NOTE - I will use simple and Brute force method
@@ -59,6 +64,27 @@ func findPairs(arr []int, target int) [][]int {
 	return pairs
 }
 
+// NOTE - I will use map to solve this problem
 func findPairsUsingMap(arr []int, target int) [][]int {
+	pairs := [][]int{}
 
+	// arr := []int{1, 2, 3, 4, 5}
+	// target := 6
+
+	// Create a map to store the elements of the array
+	seen := make(map[int]bool)
+
+	for _, num := range arr {
+		complement := target - num
+
+		// Check if the complement is already in the map
+		if seen[complement] {
+			pairs = append(pairs, []int{complement, num})
+		}
+
+		// Mark the current number as seen
+		seen[num] = true
+	}
+
+	return pairs
 }
